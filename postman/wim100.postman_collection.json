@@ -1,0 +1,169 @@
+{
+	"info": {
+		"name": "WIM 100 - Backend",
+		"description": "Colección de los endpoints para probar el login, CRUD de postulantes y validaciones.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticación",
+			"item": [
+				{
+					"name": "Login correcto (200)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuario\": \"evaluadora1\",\n  \"password\": \"wim2026\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "auth", "login" ]
+						}
+					}
+				},
+				{
+					"name": "Login clave incorrecta (401)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuario\": \"evaluadora1\",\n  \"password\": \"clave_mala\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "auth", "login" ]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Postulantes",
+			"item": [
+				{
+					"name": "Listar postulantes (200)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes" ]
+						}
+					}
+				},
+				{
+					"name": "Obtener postulante por ID (200)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes/1",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes", "1" ]
+						}
+					}
+				},
+				{
+					"name": "Registrar postulante (201)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Antonia Pérez Lillo\",\n  \"correo\": \"antonia.perez@ejemplo.cl\",\n  \"telefono\": \"+56 9 1111 2299\",\n  \"area\": \"Forense y respuesta a incidentes\",\n  \"aniosExperiencia\": 6,\n  \"resumenExperiencia\": \"Analista forense en un equipo ficticio de respuesta a incidentes.\",\n  \"linkedinUrl\": \"https://www.linkedin.com/in/antonia-perez-demo\",\n  \"cvNombre\": \"CV_Antonia.pdf\",\n  \"registradaPor\": \"Camila Rojas Demo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes" ]
+						}
+					}
+				},
+				{
+					"name": "Registrar con datos inválidos (400)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"An\",\n  \"correo\": \"correo-invalido\",\n  \"telefono\": \"+56 9 1111 2299\",\n  \"area\": \"Forense y respuesta a incidentes\",\n  \"aniosExperiencia\": -1,\n  \"resumenExperiencia\": \"Corto\",\n  \"linkedinUrl\": \"http://sin-https.com\",\n  \"registradaPor\": \"Camila Rojas Demo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes" ]
+						}
+					}
+				},
+				{
+					"name": "Actualizar postulante (200)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Antonia Pérez Actualizada\",\n  \"correo\": \"antonia.perez@ejemplo.cl\",\n  \"telefono\": \"+56 9 1111 2299\",\n  \"area\": \"Forense y respuesta a incidentes\",\n  \"aniosExperiencia\": 7,\n  \"resumenExperiencia\": \"Analista forense senior en un equipo ficticio de respuesta a incidentes.\",\n  \"linkedinUrl\": \"https://www.linkedin.com/in/antonia-perez-demo\",\n  \"cvNombre\": \"CV_Antonia_v2.pdf\",\n  \"registradaPor\": \"Camila Rojas Demo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes/4",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes", "4" ]
+						}
+					}
+				},
+				{
+					"name": "Cambiar estado (200)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"estado\": \"EN_EVALUACION\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes/4/estado",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes", "4", "estado" ]
+						}
+					}
+				},
+				{
+					"name": "Eliminar postulante (204)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/postulantes/4",
+							"host": [ "{{baseUrl}}" ],
+							"path": [ "api", "postulantes", "4" ]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
