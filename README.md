@@ -1,4 +1,4 @@
-# WIM100 — Backend Spring Boot
+# WIM100 - Backend (SpringBoot)
 
 API REST del proyecto académico WIM100 para registrar postulantes de ciberseguridad y validar el acceso del equipo de Evaluadora y Dirección. Utiliza Spring Boot, Java, Spring Data JPA y MySQL.
 
