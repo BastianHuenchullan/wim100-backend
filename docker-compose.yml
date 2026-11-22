@@ -1,27 +1,27 @@
 services:
-  mysql-wim100:
+  db:
     image: mysql:8.0
     container_name: mysql-wim100
     environment:
       MYSQL_DATABASE: wim100
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3307:3306"
+      - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 5s
       timeout: 5s
       retries: 10
 
-  backend-wim100:
+  backend:
     build: .
     container_name: backend-wim100
     ports:
       - "8080:8080"
     depends_on:
-      mysql-wim100:
+      db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-wim100:3306/wim100?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Santiago
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/wim100?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Santiago
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_DATASOURCE_PASSWORD: root
